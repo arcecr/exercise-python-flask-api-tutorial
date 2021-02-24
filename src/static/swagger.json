@@ -1,0 +1,184 @@
+{
+  "swagger": "2.0",
+   "info": {
+      "description": "For 4Geeks Academy by Dylan A. Miranda",
+      "version": "1.0.0",
+      "title": "Swagger TodoApp",
+      "contact": {
+         "email": "dylanarce25@gmail.com"
+      }
+   },
+   "tags": [
+        {
+            "name": "todo",
+            "description": "Operations about tasks"
+        }
+    ],
+    "paths": {
+        "/todos": {
+            "get": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Returns tasks",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {"$ref": "#/definitions/Todo"}
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Add task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body", 
+                        "description": "Task description",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "label": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }   
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "405": {
+                        "description": "Missing label parameter"
+                    }
+                }
+            }
+        },
+
+        "/todos/{taskId}": {
+            "put": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Update task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "Id of task that need to be updated",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body", 
+                        "description": "Task description",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "label": {
+                                    "type": "string"
+                                },
+                                "done": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }   
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns all tasks",
+                        "schema": {
+                            "type": "array",
+                            "items": {"$ref": "#/definitions/Todo"}
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    },
+                    "405": {
+                        "description": "Missing label or done parameter"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "todo"
+                ],
+                "summary": "Delete task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "taskId",
+                        "in": "path",
+                        "description": "Id of task that need to be delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns all tasks",
+                        "schema": {
+                            "type": "array",
+                            "items": {"$ref": "#/definitions/Todo"}
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    }
+                }
+            }
+        }
+    },  
+    "definitions": {
+        "Todo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "done": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}
+
+
+
